@@ -5902,7 +5902,7 @@ class Axes(martist.Artist):
     def hexbin(self, x, y, C = None, gridsize = 100, bins = None,
                     xscale = 'linear', yscale = 'linear', extent = None,
                     cmap=None, norm=None, vmin=None, vmax=None,
-                    alpha=None, linewidths=None, edgecolors='none',
+                    alpha=None, linewidths=None, edgecolors='face',
                     reduce_C_function = np.mean, mincnt=None, marginals=False,
                     **kwargs):
         """
@@ -6001,10 +6001,11 @@ class Axes(martist.Artist):
 
         Other keyword arguments controlling the Collection properties:
 
-        *edgecolors*: [ *None* | ``'none'`` | mpl color | color sequence ]
-           If ``'none'``, draws the edges in the same color as the fill color.
-           This is the default, as it avoids unsightly unpainted pixels
-           between the hexagons.
+        *edgecolors*: [ 'face' | 'none' | *None* | mpl color | color sequence ]
+           If 'face', draws the edges in the same color as the fill color.
+
+           If 'none', no edge is drawn; this can sometimes lead to unsightly
+           unpainted pixels between the hexagons.
 
            If *None*, draws the outlines in the default color.
 
@@ -6199,8 +6200,6 @@ class Axes(martist.Artist):
             ymax = 10**ymax
             self.set_yscale('log')
 
-        if edgecolors=='none':
-            edgecolors = 'face'
         collection = mcoll.PolyCollection(
             polygons,
             edgecolors = edgecolors,
